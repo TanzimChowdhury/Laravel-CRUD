@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +19,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/home', function () {
-//    auth()->logout();
+//auth()->logout();
+    //Associate a role with the user
+   //auth()->login();
+
 
     return view('welcome');
 });
@@ -28,6 +34,11 @@ Route::post('/register', [RegisterController::class,'store']);
 Route::get('/login', [SessionsController::class,'login'])->middleware('guest');
 
 Route::post('/login', [SessionsController::class,'authenticate']);
+
+Route::get('/app_settings',[AdminController::class,'view'])->middleware('onlyAdmin');
+
+Route::post('/logout', [SessionsController::class,'destroy'])->middleware('auth');
+
 
 
 

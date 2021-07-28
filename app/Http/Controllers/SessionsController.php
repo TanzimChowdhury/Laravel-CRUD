@@ -13,7 +13,7 @@ class SessionsController extends Controller
     }
 
     public function authenticate(){
-//        ddd(\request()->all());
+
        $creds =  request()->validate([
             'username'=>'required',
             'password'=>'required',
@@ -26,7 +26,11 @@ class SessionsController extends Controller
         throw ValidationException::withMessages([
             "loginFailed"=>"Invalid Username/Password"
         ]);
+    }
 
+    public function destroy(){
+        auth()->logout();
+        return redirect('home');
     }
 
 }
